@@ -13,6 +13,9 @@ POC bomber默认使用验证模式进行poc的验证，如返回结果中attack�
 ## 😄 红队专版-RedTeam 3.0
 POC-bomber的 v3.0.0 版本，拥有更快的扫描效率，修复因单个poc造成的卡顿问题和各若干bug，增加彩色输出和进度显示，支持指定poc目录，适合hvv快节奏，增加2022部分已公开漏洞的poc。支持自建dnslog服务器，在配置自己的域名后可以利用pocbomber在vps开启一个dnslog平台，进行部分漏洞dns带外检测。
 
+## 🔧 本fork添加的功能
+使用monkey patch为poc添加了默认的请求间隔，429自动重试等
+
 
 
 ## 💻 Screenshots    
