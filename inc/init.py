@@ -17,6 +17,7 @@ def init_all():
     common.set_value('dnslog_flag', True if args.dnslog else False)                                 # --dnslog
     common.set_value('attack', True if args.attack else False)                                      # --attack
     common.set_value("target_list", [args.url] if args.url else common.get_target_list(args.file))  # --url,--file
+    common.set_value("request_interval", args.interval if args.interval else config.request_interval)           # --interval
     common.set_value("pocinfo_dict", common.get_pocinfo_dict())
     common.set_value("script_list", common.get_poc_scriptname_list_by_search(poc_path, poc_list))
     common.set_value("total_times", len(common.get_value("target_list"))*len(common.get_value("script_list")))

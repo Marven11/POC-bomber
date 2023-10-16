@@ -25,5 +25,5 @@ dnslog_web_port = 5000
 # dnslog服务端ip
 dnslog_server_ip = ""
 
-
+request_interval = 0.05
 

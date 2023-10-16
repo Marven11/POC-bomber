@@ -2,26 +2,24 @@ import requests
 import time
 import threading
 import functools
+from inc import common
 
+def sleep_interval(f):
+    lock = threading.Lock()
+    last_time = 0
 
-def sleep_interval(sleep_time):
-    def wrapper(f):
-        lock = threading.Lock()
-        last_time = time.perf_counter() - sleep_time
+    @functools.wraps(f)
+    def _wrap(*args, **kwargs):
+        nonlocal last_time
+        with lock:
+            duration = time.perf_counter() - last_time
+            if duration < common.get_value("request_interval"):
+                time.sleep(common.get_value("request_interval") - duration)
+            last_time = time.perf_counter()
+        return f(*args, **kwargs)
 
-        @functools.wraps(f)
-        def _wrap(*args, **kwargs):
-            nonlocal last_time
-            with lock:
-                duration = time.perf_counter() - last_time
-                if duration < sleep_time:
-                    time.sleep(sleep_time - duration)
-                last_time = time.perf_counter()
-            return f(*args, **kwargs)
+    return _wrap
 
-        return _wrap
-
-    return wrapper
 
 
 def auto_retry_429(f):
@@ -55,7 +53,7 @@ def auto_retry(retry_times):
 
 def monkey_patch_all():
     # 因为request.request最终调用request.Session.request, 我们只需要patch session的request函数
-    requests.Session.request = sleep_interval(0.05)(requests.Session.request)
+    requests.Session.request = sleep_interval(requests.Session.request)
     requests.Session.request = auto_retry_429(requests.Session.request)
     requests.get = auto_retry(5)(requests.get)
 

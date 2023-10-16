@@ -15,7 +15,8 @@ POC-bomber的 v3.0.0 版本，拥有更快的扫描效率，修复因单个poc�
 
 ## 🔧 本fork添加的功能
 使用monkey patch为poc添加了默认的请求间隔，429自动重试等
-
+新选项：
+- `--interval`: 指定请求间隔
 
 
 ## 💻 Screenshots    
